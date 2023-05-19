@@ -1,0 +1,332 @@
+#include <stdio.h>
+
+    //Declaração de variáveis
+    int matEstoque = 10, probeestEstoque = 10, fisEstoque = 10, quimEstoque = 10, comEstoque = 10; //Estoque
+    int mVl = 0, peVl = 0, fVl = 0, qVl = 0, cVl = 0, tVl; //Valor
+    int mDj, peDj, fDj, qDj, cDj; //Desejado
+    int mat[10], probeest[10], fis[10], quim[10], comp[10], botoes,i; //Vetores e botões
+    int mV = 0, peV = 0, fV = 0, qV = 0, cV = 0; //Vendido
+    int mC = 1, peC = 2, fC = 3, qC = 4, cC = 5; //Código
+
+
+void inventario(); //Declaração da função inventário para usar no main
+
+int Descricao(); //Declaração da função Descrição para usar no main
+ 
+int Compra(); //Declaraçã da função Compra para usar no main
+
+int Montante(); //Declaração da função Total para mostrar o montant
+
+int main() //Interface Principal
+{
+    printf("\nBem vindo a Livraria Duna!\n");
+  
+    printf("\n");
+  
+    printf("Escolha uma opção:\n\t[1] Inventário\n\t[2] Descrição\n\t[3] Comprar Livros\n\t[4] Total de vendidos e montante em caixa\n\t[5] Encerrar\n");
+
+    scanf("%d", &botoes);
+
+    if ((botoes <= 5) && (botoes >= 1)) 
+    {
+        switch (botoes) 
+        {
+            case 1:
+                system("clear");
+                inventario();
+                break;
+
+            case 2:
+                system("clear");
+                Descricao();
+                break;
+
+            case 3:
+                system("clear");
+                Compra();
+                break;
+
+            case 4:
+                system("clear");
+                Montante();
+                break;
+
+            case 5:
+                system("clear");
+                exit(0);
+                break;
+        }
+    } else 
+    {
+        system ("clear");
+        printf("\nInsira outro número\n");
+        main ();
+    }
+    return 0;
+}
+
+void inventario() //Informações Inventário
+{    
+    mV += mDj;
+    peV += peDj;
+    fV += fDj;
+    qV += qDj;
+    cV += cDj;
+
+    int tamanho = 5;
+    char* categorias[] = {"Matemática", "Probabilidade e estatística", "Física", "Química", "Computação"};
+    int disponivel[] = {matEstoque, probeestEstoque, fisEstoque, quimEstoque, comEstoque};
+    int vendido[] = {mV, peV, fV, qV, cV};
+    int codigo[] = {mC, peC, fC, qC, cC};
+    int valor[] = {mVl, peVl, fVl, qVl, cVl};
+
+    printf("Categoria                    Disponível     Vendido     Código     Valor\n");
+    for (int i = 0; i < tamanho; i++) 
+    {
+        printf("%-31s %-15d %-12d %-12d R$%-10d\n", categorias[i], disponivel[i], vendido[i], codigo[i], valor[i]);
+    }
+
+    printf("\n[1] Voltar\n");
+    scanf("%d", &botoes);
+
+    if (botoes == 1) 
+    {
+        system("clear");
+        main(); 
+    } else 
+    {
+        system("clear");
+        printf("Número Inválido\n");
+        inventario();
+    }
+}
+
+int Descricao() //Descrição dos livros
+{
+  
+  FILE *mF = fopen("Matemática","r");
+  char mTexto [200];
+  
+  FILE *peF = fopen ("Probabilidade","r");
+  char peTexto[200];
+  
+  FILE *qF = fopen ("Química","r");
+  char qTexto [200];
+  
+  FILE *fF = fopen ("Física","r");
+  char fTexto [200];
+  
+  FILE *cF = fopen ("Computação","r");
+  char cTexto [200];
+  
+  printf ("\nEscolha uma opção:\n\t[1]Matemática\n\t[2]Probabilidade e Estatística\n\t[3]Química\n\t[4]Física\n\t[5]Computação\n\t[6]Voltar\n");
+  
+  scanf("%d", &botoes);
+
+  if (botoes <= 6 && botoes >= 1){
+    switch(botoes)
+    {
+      case 1:
+        system("clear");
+        while (fgets(mTexto, 200, mF) != NULL)
+        {
+          fgets(mTexto, 200, mF);
+          printf("%s", mTexto);
+        }
+      break;
+      
+      case 2:
+        while (fgets(peTexto, 200, peF) != NULL)
+        {
+          fgets(peTexto, 200, peF);
+          printf("%s", peTexto);
+        }   
+      break;
+  
+      case 3:
+        while (fgets(qTexto, 200, qF) != NULL)
+        {
+        fgets(qTexto, 200, qF);
+        printf("%s", qTexto);
+        }
+      break;
+  
+      case 4:
+        while (fgets(fTexto, 200, fF) != NULL)
+        {
+        fgets(fTexto, 200, fF);
+        printf("%s", fTexto);
+        }
+      break;
+      
+      case 5:
+        while (fgets(cTexto, 200, cF) != NULL)
+        {
+        fgets(cTexto, 200, cF);
+        printf("%s", cTexto);
+        }
+      break;
+  
+      case 6:
+        system("clear");
+        main();
+    }
+  }
+  else 
+  {
+    printf("Número inválido");
+    system("clear");
+    Descricao();
+  }
+}
+
+int Compra() //Compra dos livros 
+{ 
+  tVl = mVl + peVl + fVl + qVl + cVl;
+  
+  printf("\npreço total no carrinho: R$%d.00\n", tVl);
+
+  printf("\nEscolha a categoria\n\t[1]Matemática\n\t[2]Probabilidade e Estatística\n\t[3]Física\n\t[4]Quimica\n\t[5]Computação\n\t[6]Voltar\n");
+
+  scanf("%d",&botoes);
+  system("clear");
+
+  if ((botoes <= 6) && (botoes >= 1)) 
+  {
+    switch(botoes)
+    {     
+      case 1:  
+        printf("\nQuantos livros?: ");
+        scanf("%d",&mDj);
+        
+        if(matEstoque >= mDj)
+          {
+          printf("\n%d livros no carrinho\n",mDj);
+          matEstoque -= mDj; 
+          mVl = mDj * 150;
+          system("clear");
+          } else 
+            {
+            printf("\nNão tem no estoque\n");
+            system("clear");
+            } 
+        return Compra();
+      break;
+      
+      case 2:
+        printf("\nQuantos livros?: ");
+        scanf("%d",&peDj);
+        
+        if(probeestEstoque >= peDj)
+          {
+          printf("\n%d livros no carrinho\n", peDj);
+          probeestEstoque -= peDj; 
+          peVl = peDj * 100;
+          system("clear");
+          } else 
+            {
+            printf("\nNão tem no estoque\n");
+            system("clear");
+            }
+        return Compra();
+      break;
+  
+      case 3:
+        printf("\nQuantos livros?: ");
+        scanf("%d",&fDj);
+        
+        if(fisEstoque >= fDj)
+          {
+          printf("\n%d livros no carrinho\n",fDj);
+          fisEstoque -= fDj; 
+          fVl = fDj * 160;
+          system("clear");
+          } else 
+            {
+            printf("\nNão tem no estoque\n");
+            system("clear");
+            }
+          return Compra();
+        break;
+  
+      case 4:
+          printf("\nQuantos livros?: ");
+          scanf("%d",&qDj);
+        
+        if(quimEstoque >= qDj)
+          {
+          printf("\n%d livros no carrinho\n",qDj);
+          quimEstoque -= qDj; 
+          qVl = qDj * 160;
+          system("clear");
+          } else 
+            {
+            printf("\nNão tem no estoque\n");
+            system("clear");
+            }
+        return Compra();
+      break;
+      
+      case 5:
+        printf("\nQuantos livros?: ");
+        scanf("%d",&cDj);
+        
+        if(comEstoque >= cDj)
+          {
+          printf("\n%d livros no carrinho\n",cDj);
+          comEstoque -= cDj; 
+          cVl = cDj * 200;
+          system("clear");
+          } else 
+            {
+            printf("\nNão tem no estoque\n");
+            system("clear");  
+            }
+        return Compra(); 
+      break;
+  
+      case 6:
+      return main();
+    }
+  }
+  else 
+  {  
+    system("clear");
+    printf("Número Inválido");
+    Compra();
+  }
+}
+
+int Montante() //Informações Montante
+{
+    int tamanho2 = 2;
+    char* ver[] = {"Valor", "Desejado"};
+    int Matematica[] = {mVl, mDj};
+    int Probeest[] = {peVl, peDj};
+    int Fisica[] = {fVl, fDj};
+    int Quimica[] = {qVl, qDj};
+    int Computacao[] = {cVl, cDj};
+
+    printf("\nTotal de vendidos e montante em caixa\n");
+    printf("\n");
+    printf("            Matemática        Probabilidade e Estatística     Física         Química   Computacao\n");
+
+    for (int i = 0; i < tamanho2; i++) 
+    {
+        printf("%-15s %-30d %-20d %-15d %-12d %-10d\n", ver[i], Matematica[i], Probeest[i], Fisica[i], Quimica[i], Computacao[i]);
+    }
+
+    int botoes;
+    printf("\n[1] Voltar\n");
+    scanf("%d", &botoes);
+
+    if (botoes == 1) 
+    {
+        system("clear");
+        main(); 
+    } else 
+    {
+        printf("Número Inválido");
+    }
+
+}
